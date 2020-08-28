@@ -1,0 +1,50 @@
+initialize() {
+	initializeTreeSeq();
+	initializeMutationRate(0);
+	initializeMutationType("m1", 0.5, "f", s);
+	initializeGenomicElementType("g1", m1, 1.0);
+        initializeGenomicElement(g1, 0, 2883468901);
+
+        ends = c(249904549,249904550,493103922,493103923,691126352,691126353,882661886,882661887,1063577146,1063577147,
+                1234692213,1234692214,1394013772,1394013773,1540453883,1540453884,1682150456,1682150457,1817685203,
+                1817685204,1952731822,1952731823,2086583717,2086583718,2201753595,2201753596,2309103135,2309103136,
+                2411634527,2411634528,2501989280,2501989281,2583518887,2583518888,2661600397,2661600398,2720981238,
+                2720981239,2784006758,2784006759,2832164335,2832164336,2883468901);
+        rates = c(1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,
+                0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,
+                1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,0.5,1e-8,
+                0.5,1e-8,0.5,1e-8);
+
+
+        initializeRecombinationRate(rates,ends);
+}
+
+1 late() {
+	sim.addSubpop("p1", 1);
+	sim.addSubpop("p2", 1);
+	sim.treeSeqRememberIndividuals(sim.subpopulations.individuals);
+	
+	p1.genomes.addNewDrawnMutation(m1, asInteger(159174683));
+	
+	sim.addSubpop("p3", 10000);
+	m = asFloat(mig); 
+	p3.setMigrationRates(c(p1, p2), c(m, 1-m));
+}
+
+//exponential growth with initial population size N=10000
+2:20 {
+	newSize = asInteger(round(1.05^(sim.generation-1) * 10000));
+	p3.setSubpopulationSize(newSize);
+}
+
+2 late() {
+	p3.setMigrationRates(c(p1, p2), c(0.0, 0.0));
+	p1.setSubpopulationSize(0);
+	p2.setSubpopulationSize(0);
+}
+
+20 late() {
+	outname = "" + out + ".trees";
+	sim.treeSeqOutput(outname);
+	sim.simulationFinished();
+}

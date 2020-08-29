@@ -1,4 +1,4 @@
-Untitled
+Ancestry-based stats and plots for CV
 ================
 
 ``` r
@@ -8,7 +8,7 @@ suppressMessages(library(Hmisc))
 suppressMessages(library(ggpubr))
 ```
 
-Ancestry proportion plot
+## Ancestry proportion plot
 
 ``` r
 #get CV combined & chr1 only
@@ -88,7 +88,7 @@ ggarrange(Santiago_ancprop, Fogo_ancprop, NWcluster_ancprop, nrow = 3, ncol = 1,
 
 ![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-Tract length plot
+## Tract length and DAT plots
 
 ``` r
 #get tracts spanning duffy locus by island, order by length
@@ -319,7 +319,7 @@ ggarrange(Santiago_DATplot, Fogo_DATplot, NWcluster_DATplot, nrow=3, ncol=1, hei
 
 ![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-Stats calculations
+## Ancestry-based stats calculations
 
 ``` r
 #median tract length 
@@ -516,155 +516,168 @@ CV_stats
 write.table(CV_stats, file="CV_stats.txt", quote = FALSE, row.names = FALSE)
 ```
 
-## iDAT plots
-
-skeleton of script for creating windowed iDAT dataframe:
-
-    #chr coordinates of 10000 positions where iDAT was calculated
-    load("/Users/iman/Documents/CV_sample_coords.RData")
-    
-    #list of chr that coorespond with each coordinate
-    load("CV_sample_chr.RData")
-    
-    
-    iDAT_df <- data.frame(CV_sample_chr, CV_sample_coords, Santiago_iDAT_vector_abs, Fogo_iDAT_vector_abs, NWcluster_iDAT_vector_abs)
-    names(iDAT_df) <- c("chr", "coord", "Santiago_iDAT", "Fogo_iDAT", "NWcluster_iDAT")
-    
-    iDAT_df$chrom <- factor(iDAT_df$chr, levels = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22"))
-    
-    iDAT_df %<>% add_row(chr = "chr1", coord = bene_locus, Santiago_iDAT = Santiago_iDAT_score, Fogo_iDAT = Fogo_iDAT_score, NWcluster_iDAT = NWcluster_iDAT_score)
-    
-    
-    manhattan_iDAT_df <- iDAT_df %>% 
-      
-      #get chr size
-      group_by(chrom) %>% 
-      summarise(chr_len=max(coord)) %>% 
-      
-      #get cumulative coord for each chr
-      mutate(tot=cumsum(as.numeric(chr_len))-chr_len) %>%
-      select(-chr_len) %>%
-      left_join(iDAT_df, ., by=c("chrom"="chrom")) %>%
-      
-      #cumulative coord for each SNP
-      arrange(chrom, coord) %>%
-      mutate(coord_cum=coord+tot)
-      
-    #save intermediate file
-    save(manhattan_iDAT_df, file="manhattan_iDAT_df.RData")
-    
-    #standardize iDAT scores
-    manhattan_iDAT_df$Santiago_iDAT_stand <- (manhattan_iDAT_df$Santiago_iDAT - mean(manhattan_iDAT_df$Santiago_iDAT)) / sd(manhattan_iDAT_df$Santiago_iDAT)
-    manhattan_iDAT_df$Fogo_iDAT_stand <- (manhattan_iDAT_df$Fogo_iDAT - mean(manhattan_iDAT_df$Fogo_iDAT)) / sd(manhattan_iDAT_df$Fogo_iDAT)
-    manhattan_iDAT_df$NWcluster_iDAT_stand <- (manhattan_iDAT_df$NWcluster_iDAT - mean(manhattan_iDAT_df$NWcluster_iDAT)) / sd(manhattan_iDAT_df$NWcluster_iDAT)
-    
-    chr_lengths <- c(249904550,243199373,198022430,191535534,180915260,171115067,159321559,146440111,141696573,135534747,135046619,133851895,115169878,107349540,102531392,90354753,81529607,78081510,59380841,63025520,48157577,51304566)
-    chr_names <- levels(manhattan_iDAT_df$chrom)
-    
-    #get bp coordinates for 20Mb windows
-    windowCoords <- function(chr) {
-      chr_len <- chr_lengths[which(chr_names==chr)]
-      chr_start <- manhattan_iDAT_df[manhattan_iDAT_df$chr==chr, "coord"][1]
-      start_bp <- c(seq(chr_start, chr_len-20000000, 1000000), chr_len-20000000)
-      end_bp <- c(seq(chr_start+20000000, chr_len, 1000000), chr_len)
-      chrom_coords <<- add_row(chrom_coords, start_bp=start_bp, end_bp=end_bp, chr=chr)
-    }
-    
-    #get indices in manhattan_iDAT_df for each window
-    bp_indices <- function(x) {
-      window_coords <- manhattan_iDAT_df[(manhattan_iDAT_df$chr==chrom_coords$chr[x] & manhattan_iDAT_df$coord <= chrom_coords$end_bp[x] & manhattan_iDAT_df$coord >= chrom_coords$start_bp[x]),"coord"]
-      start_index <- which(manhattan_iDAT_df$coord == min(window_coords))
-      end_index <- which(manhattan_iDAT_df$coord == max(window_coords))
-      x1 <- x
-      indices <<- add_row(indices, start_index, end_index, x1)
-    }
-    
-    #calculate mean of each window based on indices
-    meanWindow <- function(x, column_name) {
-      windowMean <- mean(manhattan_iDAT_df[chrom_coords_narm$start_index[x]:chrom_coords_narm$end_index[x],column_name])
-      mean_vector <<- c(mean_vector, windowMean)
-    }
-    
-    
-    #create window bp coordinate df with chr1
-    chrom_coords <- NULL
-    chr_len <- chr_lengths[which(chr_names=="chr1")]
-    chr_start <- manhattan_iDAT_df[manhattan_iDAT_df$chr=="chr1", "coord"][1]
-    start_bp <- c(seq(chr_start, chr_len-20000000, 1000000), chr_len-20000000)
-    end_bp <- c(seq(chr_start+20000000, chr_len, 1000000), chr_len)
-    chr <- rep("chr1", length(start_bp))
-    chrom_coords <- data.frame(start_bp, end_bp, chr)
-    
-    #run function for all chromosomes
-    mapply(FUN = windowCoords, chr=chr_names[2:22])
-    
-    #index ids
-    x <- seq(1, length(chrom_coords$chr), 1)
-    
-    #create indices df
-    window_coords <- manhattan_iDAT_df[(manhattan_iDAT_df$chr==chrom_coords$chr[1] & manhattan_iDAT_df$coord <= chrom_coords$end_bp[1] & manhattan_iDAT_df$coord >= chrom_coords$start_bp[1]),"coord"]
-    start_index <- which(manhattan_iDAT_df$coord == min(window_coords))
-    end_index <- which(manhattan_iDAT_df$coord == max(window_coords))
-    x1 <- 1
-    indices <- data.frame(start_index, end_index, x1)
-    
-    #run function for all windows (will fail when window doesn't exist in this data set...just move on to the next window) (i.e. change 1:length(x) to next_index:length(x) and run mapply again)
-    mapply(FUN=bp_indices, x=x[1:length(x)])
-    
-    #include NAs
-    start_index[indices$x1] <- indices$start_index
-    end_index[indices$x1] <- indices$end_index
-    
-    chrom_coords$start_index <- start_index
-    chrom_coords$end_index <- end_index
-    
-    #remove windows with no SNPs in this dataset
-    chrom_coords_narm <- chrom_coords[complete.cases(chrom_coords),]
-    
-    #new index ids
-    x<-seq(1,length(chrom_coords_narm$start_index), 1)
-    
-    #get means for each window for each island
-    mean_vector <- NULL
-    
-    mapply(FUN=meanWindow, x=x, column_name="Santiago_iDAT_stand")
-    
-    chrom_coords_narm$Santiago_window_means_stand <- mean_vector
-    
-    mapply(FUN=meanWindow, x=x, column_name="Fogo_iDAT_stand")
-    
-    chrom_coords_narm$Fogo_window_means_stand <- mean_vector
-    
-    mapply(FUN=meanWindow, x=x, column_name="Santiago_iDAT_stand")
-    
-    chrom_coords_narm$NWcluster_window_means_stand <- mean_vector
-    
-    #save intermediate file
-    save(chrom_coords_narm, file = "chrom_coords_narm.RData")
-    
-    #make new df for plotting windowed iDAT scores
-    
-    
-    chrom_coords_narm$midpont <- ((chrom_coords_narm$end_bp + chrom_coords_narm$start_bp) / 2)
-    
-    chrom_coords_narm$chrom <- factor(chrom_coords_narm$chr, levels = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22"))
-    
-    manhattan_windowiDAT_df <- chrom_coords_narm %>% 
-      group_by(chrom) %>% 
-      summarise(chr_len=max(midpont)) %>% 
-      mutate(tot=cumsum(as.numeric(chr_len))-chr_len) %>%
-      left_join(chrom_coords_narm, ., by=c("chrom"="chrom")) %>%
-      arrange(chrom, midpont) %>%
-      mutate(coord_cum=midpont+tot)
-    
-    #new index ids
-    x<-seq(1,length(manhattan_windowiDAT_df$start_index), 1)
-    
-    #save final df
-    save(manhattan_windowiDAT_df, file="manhattan_windowiDAT_df.RData")
+## Genome-wide iDAT plots
 
 ``` r
-load(file="manhattan_windowiDAT_df.RData")
+#chr coordinates of 10000 positions where iDAT was calculated
+load("CV_sample_coords.RData")
+
+#list of chr that coorespond with each coordinate
+load("CV_sample_chr.RData")
+```
+
+``` r
+iDAT_df <- data.frame(CV_sample_chr, CV_sample_coords, Santiago_iDAT_vector_abs, Fogo_iDAT_vector_abs, NWcluster_iDAT_vector_abs)
+names(iDAT_df) <- c("chr", "coord", "Santiago_iDAT", "Fogo_iDAT", "NWcluster_iDAT")
+
+#add row for Duffy-null SNP
+iDAT_df %<>% add_row(chr = "chr1", coord = bene_locus, Santiago_iDAT = Santiago_iDAT_unstand, Fogo_iDAT = Fogo_iDAT_unstand, NWcluster_iDAT = NWcluster_iDAT_unstand)
+
+iDAT_df$chrom <- factor(iDAT_df$chr, levels = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22"))
+
+
+manhattan_iDAT_df <- iDAT_df %>% 
+  
+  #get chr size
+  group_by(chrom) %>% 
+  summarise(chr_len=max(coord)) %>% 
+  
+  #get cumulative coord for each chr
+  mutate(tot=cumsum(as.numeric(chr_len))-chr_len) %>%
+  select(-chr_len) %>%
+  left_join(iDAT_df, ., by=c("chrom"="chrom")) %>%
+  
+  #cumulative coord for each SNP
+  arrange(chrom, coord) %>%
+  mutate(coord_cum=coord+tot)
+```
+
+``` r
+#save intermediate file
+save(manhattan_iDAT_df, file="manhattan_iDAT_df.RData")
+```
+
+``` r
+#standardize iDAT scores
+manhattan_iDAT_df$Santiago_iDAT_stand <- (manhattan_iDAT_df$Santiago_iDAT - mean(manhattan_iDAT_df$Santiago_iDAT)) / sd(manhattan_iDAT_df$Santiago_iDAT)
+manhattan_iDAT_df$Fogo_iDAT_stand <- (manhattan_iDAT_df$Fogo_iDAT - mean(manhattan_iDAT_df$Fogo_iDAT)) / sd(manhattan_iDAT_df$Fogo_iDAT)
+manhattan_iDAT_df$NWcluster_iDAT_stand <- (manhattan_iDAT_df$NWcluster_iDAT - mean(manhattan_iDAT_df$NWcluster_iDAT)) / sd(manhattan_iDAT_df$NWcluster_iDAT)
+
+chr_lengths <- c(249904550,243199373,198022430,191535534,180915260,171115067,159321559,146440111,141696573,135534747,135046619,133851895,115169878,107349540,102531392,90354753,81529607,78081510,59380841,63025520,48157577,51304566)
+chr_names <- levels(manhattan_iDAT_df$chrom)
+
+#get bp coordinates for 20Mb windows
+windowCoords <- function(chr) {
+  chr_len <- chr_lengths[which(chr_names==chr)]
+  chr_start <- manhattan_iDAT_df[manhattan_iDAT_df$chr==chr, "coord"][1]
+  start_bp <- c(seq(chr_start, chr_len-20000000, 1000000), chr_len-20000000)
+  end_bp <- c(seq(chr_start+20000000, chr_len, 1000000), chr_len)
+  chrom_coords <<- add_row(chrom_coords, start_bp=start_bp, end_bp=end_bp, chr=chr)
+}
+
+#get indices in manhattan_iDAT_df for each window
+bp_indices <- function(x) {
+  window_coords <- manhattan_iDAT_df[(manhattan_iDAT_df$chr==chrom_coords$chr[x] & manhattan_iDAT_df$coord <= chrom_coords$end_bp[x] & manhattan_iDAT_df$coord >= chrom_coords$start_bp[x]),"coord"]
+  if(length(window_coords)) {
+    start_index <- which(manhattan_iDAT_df$coord == min(window_coords))
+    end_index <- which(manhattan_iDAT_df$coord == max(window_coords))
+    x1 <- x
+    indices <<- add_row(indices, start_index, end_index, x1)
+  }
+}
+
+#calculate mean of each window based on indices
+meanWindow <- function(x, column_name) {
+  windowMean <- mean(manhattan_iDAT_df[chrom_coords_narm$start_index[x]:chrom_coords_narm$end_index[x],column_name])
+  mean_vector <<- c(mean_vector, windowMean)
+}
+
+
+#create window bp coordinate df with chr1
+chrom_coords <- NULL
+chr_len <- chr_lengths[which(chr_names=="chr1")]
+chr_start <- manhattan_iDAT_df[manhattan_iDAT_df$chr=="chr1", "coord"][1]
+start_bp <- c(seq(chr_start, chr_len-20000000, 1000000), chr_len-20000000)
+end_bp <- c(seq(chr_start+20000000, chr_len, 1000000), chr_len)
+chr <- rep("chr1", length(start_bp))
+chrom_coords <- data.frame(start_bp, end_bp, chr)
+
+#run function for all chromosomes
+mapply(FUN = windowCoords, chr=chr_names[2:22])
+
+#index ids
+x <- seq(1, length(chrom_coords$chr), 1)
+
+#create indices df
+window_coords <- manhattan_iDAT_df[(manhattan_iDAT_df$chr==chrom_coords$chr[1] & manhattan_iDAT_df$coord <= chrom_coords$end_bp[1] & manhattan_iDAT_df$coord >= chrom_coords$start_bp[1]),"coord"]
+start_index <- which(manhattan_iDAT_df$coord == min(window_coords))
+end_index <- which(manhattan_iDAT_df$coord == max(window_coords))
+x1 <- 1
+indices <- data.frame(start_index, end_index, x1)
+
+#run function for all other windows
+mapply(FUN=bp_indices, x=x[2:length(x)])
+
+#include NAs
+start_index[indices$x1] <- indices$start_index
+end_index[indices$x1] <- indices$end_index
+
+chrom_coords$start_index <- start_index
+chrom_coords$end_index <- end_index
+
+#remove windows with no SNPs in this dataset
+chrom_coords_narm <- chrom_coords[complete.cases(chrom_coords),]
+
+#new index ids
+x<-seq(1,length(chrom_coords_narm$start_index), 1)
+
+#get means for each window for each island
+mean_vector <- NULL
+
+mapply(FUN=meanWindow, x=x, column_name="Santiago_iDAT_stand")
+
+chrom_coords_narm$Santiago_window_means_stand <- mean_vector
+
+mean_vector <- NULL
+
+mapply(FUN=meanWindow, x=x, column_name="Fogo_iDAT_stand")
+
+chrom_coords_narm$Fogo_window_means_stand <- mean_vector
+
+mean_vector <- NULL
+
+mapply(FUN=meanWindow, x=x, column_name="NWcluster_iDAT_stand")
+
+chrom_coords_narm$NWcluster_window_means_stand <- mean_vector
+```
+
+``` r
+#save intermediate file
+save(chrom_coords_narm, file = "chrom_coords_narm.RData")
+```
+
+``` r
+#make new df for plotting windowed iDAT scores
+
+chrom_coords_narm$midpont <- ((chrom_coords_narm$end_bp + chrom_coords_narm$start_bp) / 2)
+
+chrom_coords_narm$chrom <- factor(chrom_coords_narm$chr, levels = c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22"))
+
+manhattan_windowiDAT_df <- chrom_coords_narm %>% 
+  group_by(chrom) %>% 
+  summarise(chr_len=max(midpont)) %>% 
+  mutate(tot=cumsum(as.numeric(chr_len))-chr_len) %>%
+  left_join(chrom_coords_narm, ., by=c("chrom"="chrom")) %>%
+  arrange(chrom, midpont) %>%
+  mutate(coord_cum=midpont+tot)
+
+#new index ids
+x<-seq(1,length(manhattan_windowiDAT_df$start_index), 1)
+```
+
+``` r
+#save final df (find in datasets)
+save(manhattan_windowiDAT_df, file="manhattan_windowiDAT_df.RData")
 ```
 
 ``` r
@@ -721,7 +734,7 @@ ggplot(data=manhattan_windowiDAT_df, aes(x=coord_cum, y=Santiago_window_means_st
   )
 ```
 
-![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ``` r
 #Fogo
@@ -744,7 +757,7 @@ ggplot(data=manhattan_windowiDAT_df, aes(x=coord_cum, y=Fogo_window_means_stand)
   )
 ```
 
-![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-20-2.png)<!-- -->
+![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-27-2.png)<!-- -->
 
 ``` r
 #NW Cluster
@@ -767,4 +780,4 @@ ggplot(data=manhattan_windowiDAT_df, aes(x=coord_cum, y=NWcluster_window_means_s
   )
 ```
 
-![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-20-3.png)<!-- -->
+![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-27-3.png)<!-- -->

@@ -159,15 +159,42 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   ```
   /path/to/localancestry_tracts.py /path/to/simulation_name.trees
   ```
-  This will output a simulation_name_tractlengths.txt file in the same directory as the simulation_name.trees. The output file will include for each simulated chromosome in the population: the length of the ancestry tract spanning the variant of interest (tract_length), the start and end positions of that tract (tract_start, tract_end), the source population (P1 or P2) ancestry for that tract (anc), the number of ancestry switches across the chromosome (switches), the total proportion of P1 or P2 ancestry for the chromosome depending on which source population contributed ancestry at the site of interest (global_ancestry), and the ID corresponding to that simulated chromosome (child).
+  This will output a simulation_name_tractlengths.txt file in the same directory as the simulation_name.trees. 
   
-  * **localancestry_tracts_sample.py** first samples 172 random individuals before extracting tract length-based features for the 344 sampled chromosomes. Usage is the same.
+  **localancestry_tracts_sample.py** first samples 172 random individuals before extracting tract length-based features for the 344 sampled chromosomes. Usage is the same. Output file will be named simulation_name_tractlengths_sample.txt
+  
+  The output file will include for each simulated chromosome in the population: 
+  * tract_length: the length of the ancestry tract spanning the variant of interest
+  * tract_start, tract_end: the start and end positions of that tract, respectively
+  * anc: the source population (P1 or P2) ancestry for that tract
+  * switches: the number of ancestry switches across the chromosome
+  * global_ancestry: the total proportion of P1 or P2 ancestry for the chromosome depending on which source population contributed ancestry at the site of interest
+  * child: the ID corresponding to that simulated chromosome
   
 * **ancestry_analysis.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
   **Example usage:**
   ```
   /path/to/ancestry_analysis.R /path/to/simulation_name_ancestryproportions.csv
   ```
-  This will output the following parameters and statistics (in order): seed, selection coefficient, P1 initial admixture contribution, percentile rank of P1 local ancestry proportion at the variant of interest, P1 local ancestry proportion at the variant of interest, mean chromosome-wide P1 ancestry, variance in P1 local ancestry proportion along the chromosome, variance in P1 local ancestry proportion in the 10Mb window surrounding the site of interest, the 95% quantile for P1 local ancestry proportion, median P1 ancestry tract spanning the locus of interest, mean P1 ancestry tract spanning the locus of interest, variance in P1 ancestry tract length spanning the locus of interest, 95% quantile of P1 ancestry tract length spanning locus of interest, proportion of individuals with P1 local ancestry tract spanning more than 75% of the chromosome, proportion of individuals with P1 local ancestry tract spanning more than 95% of the chromosome, average number of ancestry switches along the chromosome, proportion of individuals with proportion of P1 ancestry along the entire chromosome 1 greater than 75%, iDAT score.
+  **ancestry_analysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
   
-  * **ancestry_analysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
+  This will output the following parameters and statistics (in order): 
+  
+  * seed
+  * selection coefficient
+  * P1 initial admixture contribution
+  * percentile rank of P1 local ancestry proportion at the variant of interest
+  * P1 local ancestry proportion at the variant of interest
+  * mean chromosome-wide P1 ancestry
+  * variance in P1 local ancestry proportion along the chromosome
+  * variance in P1 local ancestry proportion in the 10Mb window surrounding the site of interest
+  * the 95% quantile for P1 local ancestry proportion
+  * median P1 ancestry tract spanning the locus of interest
+  * mean P1 ancestry tract spanning the locus of interest
+  * variance in P1 ancestry tract length spanning the locus of interest
+  * 95% quantile of P1 ancestry tract length spanning locus of interest
+  * proportion of individuals with P1 local ancestry tract spanning more than 75% of the chromosome
+  * proportion of individuals with P1 local ancestry tract spanning more than 95% of the chromosome
+  * average number of ancestry switches along the chromosome
+  * proportion of individuals with proportion of P1 ancestry along the entire chromosome 1 greater than 75%
+  * iDAT score.

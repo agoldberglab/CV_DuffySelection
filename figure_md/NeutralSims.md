@@ -94,7 +94,7 @@ ggarrange(bene_prop_plot, median_tract_plot, mean_tract_plot, var_prop_plot,
           iDAT_score_plot, nrow=2, ncol=3, align = "hv", heights = c(1,1,1,1,1), widths = c(1,1,1,1,1), common.legend = TRUE, legend = "right")
 ```
 
-![](SuppFig_neutralsims_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](NeutralSims_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ### Sample of 172 random individuals
 
@@ -177,4 +177,4 @@ ggarrange(bene_prop_plot_sample, median_tract_plot_sample, mean_tract_plot_sampl
           iDAT_score_plot_sample, nrow=2, ncol=3, align = "hv", heights = c(1,1,1,1,1), widths = c(1,1,1,1,1), common.legend = TRUE, legend = "right")
 ```
 
-![](SuppFig_neutralsims_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](NeutralSims_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->

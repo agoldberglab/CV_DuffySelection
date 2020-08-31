@@ -46,3 +46,5 @@ job scripts:
 driver scripts:
 
 - wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one .txt file for each of the three models.
+
+Current directory also includes example Rscript for running leave-one-out cross-validation (**abc_crossval_example.R**). See ../datasets/ABC_cv_accuracy_5stats.xlsx for results of each method and combinations of hyperparameters.

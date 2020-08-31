@@ -10,7 +10,7 @@ Raw local ancestry data can be found in _**dryad DOI**_
 
 * **CV_EmpiricalAnalyses.md**
   
-  Code and results for calculating ancestry-based statistics for Cabo Verde islands (Figures 1 & 2, Figure S1).
+  Code and results for calculating ancestry-based statistics for Cabo Verde islands, including _iDAT_ score (Figures 1 & 2, Figure S1).
   
 * **GlobalAncestry.md**
   

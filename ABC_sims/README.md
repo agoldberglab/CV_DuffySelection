@@ -26,9 +26,9 @@ job scripts:
      </thead>
      <tbody>
          <tr>
-             <td rowspan=4 align="center">10000</td>
-             <td rowspan=2 align="center">exponential</td>
-             <td rowspan=2 align="center">0.05</td>
+             <td align="center">10000</td>
+             <td align="center">exponential</td>
+             <td align="center">0.05</td>
              <td align="center">single-pulse</td>
              <td align="center">-</td>
              <td align="center">m~U(0.1,0.9)</td>

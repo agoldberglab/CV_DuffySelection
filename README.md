@@ -201,4 +201,4 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   * proportion of individuals with P1 local ancestry tract spanning more than 95% of the chromosome
   * average number of ancestry switches along the chromosome
   * proportion of individuals with proportion of P1 ancestry along the entire chromosome 1 greater than 75%
-  * iDAT score.
+  * iDAT score

@@ -56,11 +56,11 @@ Current directory also includes job and wrapper scripts. **Directories will need
 
 job scripts:
 
-* **SLiM_CV_\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ./run_SLiM_globalancestry.R one time. Demographic model is single-pulse admixture 20 generations in the past with P1 admixture contribution either at 0.65 or drawn from accepted parameters from ABC analysis (.RData must be provided; see ../figure_md/ABC.md and ../figure_md/GlobalAncestry.md). Admixed population has initial N=10000, exponential growth at rate of 0.05 per generation. The Duffy-null variant either has selection coefficient randomly drawn from uniform distirbution from 0 to 0.2, or drawn from accepted parameters from ABC analysis (.RData must be provided).
+* **SLiM_CV_\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls [./run_SLiM_globalancestry.R](./run_SLiM_globalancestry.R) one time. Demographic model is single-pulse admixture 20 generations in the past with P1 admixture contribution either at 0.65 or drawn from accepted parameters from ABC analysis (.RData must be provided; see [../figure_md/ABC.md](../figure_md/ABC.md) and [../figure_md/GlobalAncestry.md](../figure_md/GlobalAncestry.md)). Admixed population has initial N=10000, exponential growth at rate of 0.05 per generation. The Duffy-null variant either has selection coefficient randomly drawn from uniform distirbution from 0 to 0.2, or drawn from accepted parameters from ABC analysis (.RData must be provided).
   
 * **ancestry_\*.sh** - scripts to extract local ancestry proportion across genome from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py 10 times.
 
-* **calcstats_\*.sh** - scripts to calculate global ancestry statistics for 10 simulations. Calls ./globalancestry_two-chromosme.R  or ./globalancestry_whole-autosome.R 10 times.
+* **calcstats_\*.sh** - scripts to calculate global ancestry statistics for 10 simulations. Calls [./globalancestry_two-chromosme.R](./globalancestry_two-chromosme.R) or [./globalancestry_whole-autosome.R](./globalancestry_whole-autosome.R) 10 times.
 
 driver scripts:
 

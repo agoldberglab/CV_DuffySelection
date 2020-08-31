@@ -8,7 +8,36 @@ Includes:
 
 job scripts:
 
-* **SLiM_CV_ABC\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. Demographic model is single-pulse admixture 20 generations in the past with P1 admixture contribution randomly drawn from a uniform distribution from 0.1 to 0.9. Admixed population has initial N=10000, exponential growth at rate of 0.05 per generation. The Duffy-null variant has selection coefficient randomly drawn from uniform distirbution from 0 to 0.2 and is modeled as dominant, additive, or recessive.
+* **SLiM_CV_ABC\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. 
+
+  Demographic model:
+    
+    <table>
+     <thead>
+         <tr>
+             <th align="center">initial population size (N)</th>
+             <th align="center">population growth model</th>
+             <th align="center">population growth rate (per gen)</th>
+             <th align="center">admixture type</th>
+             <th align="center">proportion of new migrants (per gen)</th>
+             <th align="center">P1 initial ancestry contribution</th>
+             <th align="center">selection coefficient (s)</th>
+         </tr>
+     </thead>
+     <tbody>
+         <tr>
+             <td rowspan=4 align="center">10000</td>
+             <td rowspan=2 align="center">exponential</td>
+             <td rowspan=2 align="center">0.05</td>
+             <td align="center">single-pulse</td>
+             <td align="center">-</td>
+             <td align="center">m~U(0.1,0.9)</td>
+             <td align="center">s~U(0,0.2)</td>
+         </tr>
+     </tbody>
+  </table>
+  
+  Duffy-null SNP is modeled as dominant, additive, or recessive.
   
 * **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py and ../localancestry_tracts.py 10 times each.
 
@@ -16,4 +45,4 @@ job scripts:
 
 driver scripts:
 
-- wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one .txt file.
+- wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one .txt file for each of the three models.

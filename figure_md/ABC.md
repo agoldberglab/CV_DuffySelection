@@ -98,7 +98,7 @@ ggarrange(s_results, m_results, ncol=2, nrow = 1, common.legend = TRUE, legend =
 load results of cross-validation (see abc\_crossval\_example.R)
 
 ``` r
-load("CV_ms-nn_5stats_size2_tol05.RData")
+load("CV_ms-nn_5stats_size2_tol.RData")
 ```
 
 ``` r
@@ -141,10 +141,10 @@ m_R2 <- summary(lm(true_additive_m~pred_additive_m))$r.squared
 cat(s_RMSE, s_R2)
 ```
 
-    ## 0.00849815 0.9789438
+    ## 0.008280083 0.9784741
 
 ``` r
 cat(m_RMSE, m_R2)
 ```
 
-    ## 0.009591822 0.9981969
+    ## 0.009000343 0.9984687

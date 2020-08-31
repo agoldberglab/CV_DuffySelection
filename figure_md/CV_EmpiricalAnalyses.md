@@ -11,7 +11,7 @@ suppressMessages(library(ggpubr))
 ## Ancestry proportion plot
 
 ``` r
-#get CV combined & chr1 only
+#get CV local ancestry calls from RFMix -- combined & chr1 only
 ancestry_prop <- read.table("LocalAncestry_ByIsland_allchr.txt", header=TRUE)
 chr1 <- ancestry_prop[which(ancestry_prop$CHR=="chr1"),]
 ```
@@ -89,6 +89,58 @@ ggarrange(Santiago_ancprop, Fogo_ancprop, NWcluster_ancprop, nrow = 3, ncol = 1,
 ![](CV_EmpiricalAnalyses_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ## Tract length and DAT plots
+
+The following code was run on remote cluster to extract all ancestry
+tracts by island, using results of RFmix:
+
+    #! /usr/bin/env Rscript
+    
+    suppressMessages(library(tidyverse))
+    suppressMessages(library(magrittr))
+    
+    #lists of filenames for individuals from each island
+    load("Santiago_filenames.RData")
+    load("Fogo_filenames.RData")
+    load("NWcluster_filenames.RData")
+    
+    getTracts <- function(filename) {
+      all_tracts <- read.table(filename, header=FALSE, col.names = c("chr", "bp_start", "bp_end", "anc", "cM_start", "cM_end"))
+      all_tracts$tract_length <- all_tracts$bp_end - all_tracts$bp_start
+      getIBSTracts(all_tracts)
+      getGWDTracts(all_tracts)
+    }
+    
+    getIBSTracts <- function(tracts) {
+      IBS_tracts <<- bind_rows(IBS_tracts, tracts[which(tracts$anc=="IBS"),])
+    }
+    
+    getGWDTracts <- function(tracts) {
+      GWD_tracts <<- bind_rows(GWD_tracts, tracts[which(tracts$anc=="GWD"),])
+    }
+    
+    GWD_tracts <- NULL
+    IBS_tracts <- NULL
+    
+    mapply(filename = Santiago_files, getTracts)
+    
+    save(IBS_tracts, file="Santiago_IBS_tracts.RData")
+    save(GWD_tracts, file="Santiago_GWD_tracts.RData")
+    
+    GWD_tracts <- NULL
+    IBS_tracts <- NULL
+    
+    mapply(filename = Fogo_files, getTracts)
+    
+    save(IBS_tracts, file="Fogo_IBS_tracts.RData")
+    save(GWD_tracts, file="Fogo_GWD_tracts.RData")
+    
+    GWD_tracts <- NULL
+    IBS_tracts <- NULL
+    
+    mapply(filename = NWcluster_files, getTracts)
+    
+    save(IBS_tracts, file="NWcluster_IBS_tracts.RData")
+    save(GWD_tracts, file="NWcluster_GWD_tracts.RData")
 
 ``` r
 #get tracts spanning duffy locus by island, order by length
@@ -421,7 +473,58 @@ NWcluster_var_prop_10Mb <- var(prop_10Mb$NWAnc1)
 var_prop_10Mb <- c(Santiago_var_prop_10Mb, Fogo_var_prop_10Mb, NWcluster_var_prop_10Mb)
 ```
 
+The following code was run on remote cluster to calculate mean chr1 West
+African ancestry based on tract lengths:
+
+    #! /usr/bin/env Rscript
+    #SBATCH -p common
+    #SBATCH --mem=10G
+    
+    suppressMessages(library(tidyverse))
+    suppressMessages(library(magrittr))
+    
+    #load filenames for individuals from each island
+    load("Santiago_filenames.RData")
+    load("Fogo_filenames.RData")
+    load("NWcluster_filenames.RData")
+    
+    getTracts <- function(filename) {
+      all_tracts <- read.table(filename, header=FALSE, col.names = c("chr", "bp_start", "bp_end", "anc", "cM_start", "cM_end"))
+      all_tracts$tract_length <- all_tracts$bp_end - all_tracts$bp_start
+      GWD_chr1_tracts <- getGWDTracts(all_tracts)
+      chrom_length <- 249904549.0
+      global_anc <- (sum(as.numeric(GWD_chr1_tracts$tract_length))/chrom_length)
+      child_name <- getChildName(filename)
+      return(c(global_anc, child_name))
+    }
+    
+    getGWDTracts <- function(tracts) {
+      GWD_chr1_tracts <- tracts[tracts$anc=="GWD" & tracts$chr=="1",]
+      return(GWD_chr1_tracts)
+    }
+    
+    getChildName <- function(filename) {
+      pattern <- "^.+CV_GWD_IBS/(\\d+(_R)*)_(A|B).bed"
+      pattern_match <- str_match(filename, pattern)
+      child_name <- pattern_match[,2]
+    
+      return(child_name)
+    }
+    
+    Santiago_globalancestry <- as.data.frame(t(mapply(filename = Santiago_files, getTracts)))
+    
+    save(Santiago_globalancestry, file="Santiago_globalancestry.RData")
+    
+    Fogo_globalancestry <- as.data.frame(t(mapply(filename = Fogo_files, getTracts)))
+    
+    save(Fogo_globalancestry, file="Fogo_globalancestry.RData")
+    
+    NWcluster_globalancestry <- as.data.frame(t(mapply(filename = NWcluster_files, getTracts)))
+    
+    save(NWcluster_globalancestry, file="NWcluster_globalancestry.RData")
+
 ``` r
+#load mean chr1 ancestry based on tract lengths
 load("NWcluster_globalancestry.RData")
 load("Fogo_globalancestry.RData")
 load("Santiago_globalancestry.RData")
@@ -477,6 +580,126 @@ NWcluster_iDAT_unstand <- log(iDAT_NWcluster_IBS/iDAT_NWcluster_GWD)
 
 iDAT_score <- c(Santiago_iDAT_unstand, Fogo_iDAT_unstand, NWcluster_iDAT_unstand)
 ```
+
+The following code was run to randomly draw 10000 SNP positions from
+available data:
+
+    CV_sample <- sample_n(CV_ancestry_prop, 10000)
+    CV_sample_chr <- CV_sample$CHR
+    CV_sample_coords <- CV_sample$COORD
+    
+    save(CV_sample_chr, file = "CV_sample_chr.RData")
+    save(CV_sample_coords, file = "CV_sample_coords.RData")
+
+Then, the following code was run on remote cluster to calculate
+unstandardized iDAT for 10000 random positions in the genome for the NW
+cluster. The same script was edited and run for Santiago and Fogo using
+the same positions:
+
+    #!/usr/bin/env Rscript
+    
+    #SBATCH -p common
+    #SBATCH --mem=20G
+    
+    suppressMessages(library(tidyverse))
+    
+    #load results of RFMix
+    CV_ancestry_prop <- read.table("LocalAncestry_ByIsland_allchr.txt", header=TRUE)
+    
+    chr1 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr1"),]
+    chr2 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr2"),]
+    chr3 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr3"),]
+    chr4 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr4"),]
+    chr5 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr5"),]
+    chr6 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr6"),]
+    chr7 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr7"),]
+    chr8 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr8"),]
+    chr9 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr9"),]
+    chr10 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr10"),]
+    chr11 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr11"),]
+    chr12 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr12"),]
+    chr13 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr13"),]
+    chr14 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr14"),]
+    chr15 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr15"),]
+    chr16 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr16"),]
+    chr17 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr17"),]
+    chr18 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr18"),]
+    chr19 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr19"),]
+    chr20 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr20"),]
+    chr21 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr21"),]
+    chr22 <- CV_ancestry_prop[which(CV_ancestry_prop$CHR=="chr22"),]
+    
+    #unstandardized iDAT calculation by island
+    load("NWcluster_IBS_tracts.RData")
+    load("NWcluster_GWD_tracts.RData")
+    
+    NWcluster_all_tracts <- bind_rows(IBS_tracts, GWD_tracts)
+    
+    #load list of 10000 random genomic positions and corresponding chromosome (to keep positions consistent across islands)
+    load("CV_sample_chr.RData")
+    load("CV_sample_coords.RData")
+    
+    locusAllTracts <- function(locus, tracts, chr) {
+      locus_ancestry <- tracts[tracts$chr==chr & tracts$bp_start <= locus & tracts$bp_end >= locus,]
+      return(locus_ancestry)
+    }
+    
+    calcDAT <- function(distance, haplotypes) {
+      haplotype_proportions <- sum(c(haplotypes >= distance)) / length(haplotypes)
+      DAT <- haplotype_proportions^2
+      return(DAT)
+    }
+    
+    calciDAT <- function(distance, DAT){
+      suppressMessages(require(pracma))
+      trapz_auc <- trapz(distance, DAT)
+      return(trapz_auc)
+    }
+    
+    #get ancestry-informative SNP positions
+    getCoords <- function(chr, locus) {
+      chr_coords <- as.data.frame(chr$COORD)
+      names(chr_coords) <- "coord"
+      chr_coords$distance <- abs(chr_coords$coord - locus)
+      return(chr_coords)
+    }
+    
+    CalciDAT_abs <- function(chr, locus, all_tracts) {
+      all_tracts_df <- get(all_tracts)
+      all_tracts_df$chr <- paste0("chr", all_tracts_df$chr)
+      locus_tracts <- as.data.frame(locusAllTracts(locus, all_tracts_df, chr))
+    
+      GWD_haplotypes <- c((locus_tracts[which(locus_tracts$anc=="GWD"),]$bp_end - locus), (locus - locus_tracts[which(locus_tracts$anc=="GWD"),]$bp_start))
+    
+      IBS_haplotypes <- c((locus_tracts[which(locus_tracts$anc=="IBS"),]$bp_end - locus), (locus - locus_tracts[which(locus_tracts$anc=="IBS"),]$bp_start))
+    
+      chr_coords <- getCoords_abs(get(chr), locus)
+    
+      chr_coords$GWD_DAT <- sapply(chr_coords$distance,calcDAT, haplotypes=GWD_haplotypes)
+      chr_coords$IBS_DAT <- sapply(chr_coords$distance,calcDAT, haplotypes=IBS_haplotypes)
+    
+      iDAT_GWD <- chr_coords[which(chr_coords$GWD_DAT>=0.25),]
+      iDAT_GWD <- iDAT_GWD[order(iDAT_GWD$distance),]
+    
+      iDAT_IBS <- chr_coords[which(chr_coords$IBS_DAT>=0.25),]
+      iDAT_IBS <- iDAT_IBS[order(iDAT_IBS$distance),]
+    
+      IBS_iDAT <- calciDAT(iDAT_IBS$distance, iDAT_IBS$IBS_DAT)
+      GWD_iDAT <- calciDAT(iDAT_GWD$distance, iDAT_GWD$GWD_DAT)
+    
+      locus_iDAT <- log(IBS_iDAT/GWD_iDAT)
+    
+      iDAT_vector <<- c(iDAT_vector, locus_iDAT)
+    }
+    
+    iDAT_vector <- NULL
+    
+    tracts <- rep("NWcluster_all_tracts", 10000)
+    mapply(chr=CV_sample_chr, CalciDAT_abs, locus=CV_sample_coords, all_tracts = tracts)
+    
+    NWcluster_iDAT_vector_abs <- iDAT_vector
+    
+    save(NWcluster_iDAT_vector_abs, file = "NWcluster_iDAT_vector_abs.RData")
 
 ``` r
 #load iDAT score from 10000 random positions

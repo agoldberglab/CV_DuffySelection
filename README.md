@@ -106,6 +106,7 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   </table>
 
 * **run_SLiM.R** - Rscript to run 10 replicates of SLiM simulations. Can randomly draw admixture contribution and selection coefficient from uniform distribution or set at constant value.
+
   **Example usage:**
   ```
   /path/to/run_SLiM.R --seed=1 -N 10000 \
@@ -146,6 +147,7 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   The output names will be "/path/to/out_directory/exp-05-10000_single-pulse_h-0.5_m-X.X_s-X.X_seed-X.trees" with X representing the parameters for that specific run.
   
 * **localancestry_proportions.py** - Python script to calculate local ancestry proportion across the simulated genome from .trees files from two-way admixture simulations. Based on Python script for tracking P2 local ancestry along the simulated genome that is provided in recipe 17.5 of SLiM manual. (http://benhaller.com/slim/SLiM_Manual.pdf).
+
   **Example usage:**
   ```
   /path/to/localancestry_proportions.py /path/to/simulation_name.trees
@@ -155,6 +157,7 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   * **localancestry_proportions_sample.py** first samples 172 random individuals before calculating local ancestry along the genome. Usage is the same.
   
 * **localancestry_tracts.py** - Python script to extract tract length-based features from .trees files from two-way admixture simulations. This script assumes only one chromosome and one variant was simulated in the SLiM simulation.
+
   **Example usage:**
   ```
   /path/to/localancestry_tracts.py /path/to/simulation_name.trees
@@ -172,6 +175,7 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   * child: the ID corresponding to that simulated chromosome
   
 * **ancestry_analysis.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
+
   **Example usage:**
   ```
   /path/to/ancestry_analysis.R /path/to/simulation_name_ancestryproportions.csv

@@ -8,7 +8,36 @@ Includes:
 
 job scripts:
 
-* **SLiM_CV_SWIFr\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. Demographic model is single-pulse admixture 20 generations in the past with P1 admixture contribution randomly drawn from a uniform distribution from 0.65 to 0.75. Admixed population has initial N=10000, exponential growth at rate of 0.05 per generation. The Duffy-null variant either has selection coefficient s=0 (neutral) or has selection coefficient randomly drawn from uniform distirbution from 0 to 0.2 (sweep).
+* **SLiM_CV_SWIFr\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. 
+
+  Demographic model:
+   <table>
+     <thead>
+         <tr>
+             <th align="center">initial population size (N)</th>
+             <th align="center">population growth model</th>
+             <th align="center">population growth rate (per gen)</th>
+             <th align="center">admixture type</th>
+             <th align="center">proportion of new migrants (per gen)</th>
+             <th align="center">P1 initial ancestry contribution</th>
+             <th align="center">selection coefficient (s)</th>
+         </tr>
+     </thead>
+     <tbody>
+         <tr>
+             <td rowspan=2 align="center">10000</td>
+             <td rowspan=2 align="center">exponential</td>
+             <td rowspan=2 align="center">0.05</td>
+             <td rowspan=2 align="center">single-pulse</td>
+             <td rowspan=2 align="center">-</td>
+             <td rowspan=2 align="center">m~U(0.65,0.75)</td>
+             <td align="center">s~U(0,0.2) (sweep)</td>
+         </tr>
+         <tr>
+             <td align="center">s=0 (neutral)</td>
+         </tr>
+     </tbody>
+  </table>
   
 * **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py and ../localancestry_tracts.py 10 times each.
 

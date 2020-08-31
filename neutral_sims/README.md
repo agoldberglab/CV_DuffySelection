@@ -8,7 +8,7 @@ Includes:
 
 job scripts:
 
-* **SLiM_CV_neutral\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. 
+* **SLiM_CV_neutral\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls [../run_SLiM.R](../run_SLiM.R) one time. 
 
   * Demographic models are:
   
@@ -68,9 +68,9 @@ job scripts:
     </tbody>
 </table>
   
-* **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py and ../localancestry_tracts.py 10 times each. *_SAMPLE.sh files run ../localancestry_proportions_sample.py and ../localancestry_tracts_sample.py.
+* **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls [../localancestry_proportions.py](../localancestry_proportions.py) and [../localancestry_tracts.py](../localancestry_tracts.py) 10 times each. \*\_SAMPLE.sh files run [../localancestry_proportions_sample.py](../localancestry_proportions_sample.py) and [../localancestry_tracts_sample.py](../localancestry_tracts_sample.py).
 
-* **calcstats_\*.sh** - scripts to calculate ancestry-based statistics for 10 simulations for each of the constant N and exponential growth models. Calls ../ancestryanalysis_CV.R 10 times. *_SAMPLE.sh files run ../ancestryanalysis_CV_sample.R.
+* **calcstats_\*.sh** - scripts to calculate ancestry-based statistics for 10 simulations for each of the constant N and exponential growth models. Calls [../ancestryanalysis_CV.R](../ancestryanalysis_CV.R) 10 times. \*\_SAMPLE.sh files run [../ancestryanalysis_CV_sample.R](../ancestryanalysis_CV_sample.R).
 
 driver scripts:
 

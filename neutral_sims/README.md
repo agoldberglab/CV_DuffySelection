@@ -2,7 +2,7 @@
 
 SLURM bash scripts used for running analyses on compute cluster. **Directories will need to be changed to run these scripts.** 
 
-_WARNING: Generating many .trees files will take up multiple terabytes of storage space._
+_WARNING: Generating many .trees files may take up multiple terabytes of storage space._
 
 Includes:
 

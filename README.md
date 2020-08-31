@@ -197,7 +197,7 @@ Current directory contains scripts for generating and analyzing SLiM simulations
 
   **Example usage:**
   ```
-  /path/to/ancestry_analysis.R /path/to/simulation_name_ancestryproportions.csv
+  /path/to/ancestryanalysis.R /path/to/simulation_name_ancestryproportions.csv
   ```
   **ancestryanalysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
   

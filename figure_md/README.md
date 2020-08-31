@@ -6,7 +6,7 @@ Raw local ancestry data can be found in _**dryad DOI**_
 
 * **ABC.md**
 
-  Code and results for ABC estimation of selection strength and initial admixture contribution when modeling Duffy-null as additive, dominant, or recessive (Figure S3) (see [../ABC_sims/]()../ABC_sims/). Also includes code to analyze preformance of leave-one-out cross-validation from simulated additive dataset (Figure S6).
+  Code and results for ABC estimation of selection strength and initial admixture contribution when modeling Duffy-null as additive, dominant, or recessive (Figure S3) (see [../ABC_sims/](../ABC_sims/)). Also includes code to analyze preformance of leave-one-out cross-validation from simulated additive dataset (Figure S6).
 
 * **CV_EmpiricalAnalyses.md**
   

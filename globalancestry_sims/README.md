@@ -1,7 +1,5 @@
 # Global ancestry simulations
 
-**Directories will need to be changed to run these scripts.**
-
 _WARNING: Generating many .trees files may take up multiple terabytes of storage space._
 
 Current directory contains scripts for generating SLiM whole-autosome and two-chromosome simulations and calculating global ancestry.
@@ -54,7 +52,7 @@ Current directory contains scripts for generating SLiM whole-autosome and two-ch
   This will output the following parameters and statistics (in order): seed, selection coefficient, P1 initial admixture contribution, mean genome-wide P1 ancestry, mean chromosome 1 P1 ancestry, mean P1 ancestry for the rest of the simulated genome excluding chromosome 1.
 
 
-Current direcotry also includes:
+Current directory also includes job and wrapper scripts. **Directories will need to be changed to run these scripts.**
 
 job scripts:
 

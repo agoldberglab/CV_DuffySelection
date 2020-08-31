@@ -1,8 +1,8 @@
 # CV_DuffySelection
 
-## Overview
+## Citation
 
-put description here lol
+**add biorxiv link here**
 
 ## Contents
 1. Datasets

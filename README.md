@@ -6,11 +6,11 @@
 
 ## Contents
 1. Datasets
-2. Neutral simulations
-3. SWIF(r) simulations
-4. ABC simulations
-5. Global ancestry simulations
-6. Figure markdowns
+2. Figure markdowns
+3. Neutral simulations
+4. SWIF(r) simulations
+5. ABC simulations
+6. Global ancestry simulations
 7. General use simulation scripts
 
 ##  Software used
@@ -36,25 +36,44 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 
 [./datasets/](./datasets/) - directory containing simulated datasets used for analyses, chr1 and chr2 genetic maps (from IMPUTE2: https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html) reformatted for SLiM, and observed ancestry-based stats calculated for Cabo Verde islands.
 
-## 2. Neutral simulations
+## 2. Figure markdowns
+
+[./figure_md/](./figure_md/) - directory containing markdowns including Rscripts to generate all figures. Also includes code for main analyses performed in this study (see [./figure_md/README.md](./figure_md/README.md) for more detailed descriptions).
+
+* Calculation of observed ancestry-based statistics for Cabo Verde population, including _iDAT_ scores.
+ * [./figure_md/CV_EmpiricalAnalyses.md](./figure_md/CV_EmpiricalAnalyses.md)
+ * Publication figures 1, 2, & S1
+* Comparison of observed Cabo Verde ancestry-based statistics to neutral expectations
+ * [./figure_md/NeutralSims.md](./figure_md/NeutralSims.md)
+ * Publication figure S2
+* Validation of SWIF(r) implementation
+ * [./figure_md/SWIFr_validation.md](../figure_md/SWIFr_validation.md)
+ * Publication figures S4 & S5
+* ABC estimation of selection strength and source population admixture contribution
+ * [./figure_md/ABC.md](./figure_md/ABC.md)
+ * Publication figures S3 & S6
+* Deterministic population genetic model of single-locus selection
+ * [./figure_md/SelectionStrength.md](./figure_md/SelectionStrength.md)
+ * Publication figure 3
+* Effect of single-locus selection on global ancestry patterns
+ * [./figure_md/GlobalAncestry.md](./figure_md/GlobalAncestry.md)
+ * Publication figures S7 & 4
+
+## 3. Neutral simulations
 
 [./neutral_sims/](./neutral_sims/) - directory containing bash scripts used to generate neutral simulations from 8 different demographic scenarios (see [./neutral_sims/README.md](./neutral_sims/README.md)), extract ancestry information from output files, and calculate ancestry-based statistics used in other analyses.
 
-## 3. SWIF(r) simulations
+## 4. SWIF(r) simulations
 
 [./SWIFr_sims/](./SWIFr_sims/) - directory containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
 
-## 4. ABC simulations
+## 5. ABC simulations
 
 [./ABC_sims/](./ABC_sims/) - directory containing bash scripts used to generate sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for ABC estimation of starting admixture proportion and selection coefficient.
 
-## 5. Global ancestry simulations
+## 6. Global ancestry simulations
 
 [./globalancestry_sims/](./globalancestry_sims/) - directory containing bash scripts used to generate whole autosome and two chromosome simulations, extract ancestry information, and calculate global ancestry statistics.
-
-## 6. Figure markdowns
-
-[./figure_md/](./figure_md/) - directory containing markdowns including Rscripts to generate all figures. Also includes Rscript for ABC analysis and for calculating observed ancestry-based statistics from empirical data.
 
 ## 7. General use simulation scripts
 
@@ -174,13 +193,13 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   * global_ancestry: the total proportion of P1 or P2 ancestry for the chromosome depending on which source population contributed ancestry at the site of interest
   * child: the ID corresponding to that simulated chromosome
   
-* **ancestry_analysis.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
+* **ancestryanalysis.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
 
   **Example usage:**
   ```
   /path/to/ancestry_analysis.R /path/to/simulation_name_ancestryproportions.csv
   ```
-  **ancestry_analysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
+  **ancestryanalysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
   
   This will output the following parameters and statistics (in order): 
   

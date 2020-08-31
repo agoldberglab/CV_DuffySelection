@@ -1,5 +1,7 @@
 # Global ancestry simulations
 
+**Directories will need to be changed to run these scripts.**
+
 _WARNING: Generating many .trees files may take up multiple terabytes of storage space._
 
 Current directory contains scripts for generating SLiM whole-autosome and two-chromosome simulations and calculating global ancestry.

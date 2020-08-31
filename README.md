@@ -34,27 +34,27 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 
 ## 1. Datasets
 
-./datasets - directory containing simulated datasets used for analyses, chr1 and chr2 genetic maps (from IMPUTE2: https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html) reformatted for SLiM, and observed ancestry-based stats calculated for Cabo Verde islands.
+[./datasets/](./datasets/) - directory containing simulated datasets used for analyses, chr1 and chr2 genetic maps (from IMPUTE2: https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html) reformatted for SLiM, and observed ancestry-based stats calculated for Cabo Verde islands.
 
 ## 2. Neutral simulations
 
-./neutral_sims - directory containing bash scripts used to generate neutral simulations from 8 different demographic scenarios (see ./neutral_sims/README.md), extract ancestry information from output files, and calculate ancestry-based statistics used in other analyses.
+[./neutral_sims/](./neutral_sims/) - directory containing bash scripts used to generate neutral simulations from 8 different demographic scenarios (see [./neutral_sims/README.md](./neutral_sims/README.md)), extract ancestry information from output files, and calculate ancestry-based statistics used in other analyses.
 
 ## 3. SWIF(r) simulations
 
-./SWIFr_sims - directory containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
+[./SWIFr_sims/](./SWIFr_sims/) - directory containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
 
 ## 4. ABC simulations
 
-./ABC_sims - directory containing bash scripts used to generate sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for ABC estimation of starting admixture proportion and selection coefficient.
+[./ABC_sims/](./ABC_sims/) - directory containing bash scripts used to generate sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for ABC estimation of starting admixture proportion and selection coefficient.
 
 ## 5. Global ancestry simulations
 
-./globalancestry_sims - directory containing bash scripts used to generate whole autosome and two chromosome simulations, extract ancestry information, and calculate global ancestry statistics.
+[./globalancestry_sims/](./globalancestry_sims/) - directory containing bash scripts used to generate whole autosome and two chromosome simulations, extract ancestry information, and calculate global ancestry statistics.
 
 ## 6. Figure markdowns
 
-./figure_md - directory containing markdowns including Rscripts to generate all figures. Also includes Rscript for ABC analysis and for calculating observed ancestry-based statistics from empirical data.
+[./figure_md/](./figure_md/) - directory containing markdowns including Rscripts to generate all figures. Also includes Rscript for ABC analysis and for calculating observed ancestry-based statistics from empirical data.
 
 ## 7. General use simulation scripts
 

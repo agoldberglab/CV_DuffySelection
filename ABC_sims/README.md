@@ -41,7 +41,7 @@ job scripts:
   
 * **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls [../localancestry_proportions.py](../localancestry_proportions.py) and [../localancestry_tracts.py](../localancestry_tracts.py) 10 times each.
 
-* **calcstats_\*.sh** - scripts to calculate ancestry-based statistics for 10 simulations. Calls ../ancestryanalysis_CV.R 10 times.
+* **calcstats_\*.sh** - scripts to calculate ancestry-based statistics for 10 simulations. Calls [../ancestryanalysis_CV.R](../ancestryanalysis_CV.R) 10 times.
 
 driver scripts:
 

@@ -8,7 +8,7 @@ Includes:
 
 job scripts:
 
-* **SLiM_CV_ABC\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ../run_SLiM.R one time. 
+* **SLiM_CV_ABC\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls [../run_SLiM.R](../run_SLiM.R) one time. 
 
   Demographic model:
     
@@ -39,7 +39,7 @@ job scripts:
   
   Duffy-null SNP is modeled as dominant, additive, or recessive.
   
-* **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py and ../localancestry_tracts.py 10 times each.
+* **ancestry_\*.sh** - scripts to extract ancestry information from 10 .trees files output from SLiM simulations. Calls [../localancestry_proportions.py](../localancestry_proportions.py) and [../localancestry_tracts.py](../localancestry_tracts.py) 10 times each.
 
 * **calcstats_\*.sh** - scripts to calculate ancestry-based statistics for 10 simulations. Calls ../ancestryanalysis_CV.R 10 times.
 
@@ -47,4 +47,4 @@ driver scripts:
 
 - wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one .txt file for each of the three models.
 
-Current directory also includes example Rscript for running leave-one-out cross-validation (**abc_crossval_example.R**). See ../datasets/ABC_cv_accuracy_5stats.xlsx for results of each method and combinations of hyperparameters.
+Current directory also includes example Rscript for running leave-one-out cross-validation (**abc_crossval_example.R**). See [../datasets/ABC_cv_accuracy_5stats.xlsx](../datasets/ABC_cv_accuracy_5stats.xlsx) for results of each method and combinations of hyperparameters.

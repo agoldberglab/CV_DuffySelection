@@ -42,7 +42,7 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 
 ## 3. SWIF(r) simulations
 
-./SWIFr_sims - containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
+./SWIFr_sims - directory containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
 
 ## 4. ABC simulations
 

@@ -193,13 +193,13 @@ Current directory contains scripts for generating and analyzing SLiM simulations
   * global_ancestry: the total proportion of P1 or P2 ancestry for the chromosome depending on which source population contributed ancestry at the site of interest
   * child: the ID corresponding to that simulated chromosome
   
-* **ancestryanalysis.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
+* **ancestryanalysis_CV.R** - Rscript to calculate ancestry-based statistics from simulation_name_ancestryproportions.csv and simulation_name_tractlengths.txt files. Assumes simulations were modeled after human chromosome 1, with a single variant at the Duffy-null SNP position. Requires both ancestry proportion and tract length files to be in the same directory following the same naming scheme. Will calculate statistics and print to stdout.
 
   **Example usage:**
   ```
-  /path/to/ancestryanalysis.R /path/to/simulation_name_ancestryproportions.csv
+  /path/to/ancestryanalysis_CV.R /path/to/simulation_name_ancestryproportions.csv
   ```
-  **ancestryanalysis_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
+  **ancestryanalysis_CV_sample.R** is the same script, but assumes the name of the ancestry proportions and tract lengths files include \_sample before the file extension. Usage is the same.
   
   This will output the following parameters and statistics (in order): 
   

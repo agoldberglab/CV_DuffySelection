@@ -50,4 +50,18 @@ Current directory contains scripts for generating SLiM whole-autosome and two-ch
   /path/to/globalancestry_two-chromosome.R /path/to/two-chromosome_simulation_name_ancestryproportions.csv
   ```
   This will output the following parameters and statistics (in order): seed, selection coefficient, P1 initial admixture contribution, mean genome-wide P1 ancestry, mean chromosome 1 P1 ancestry, mean P1 ancestry for the rest of the simulated genome excluding chromosome 1.
+
+
+Current direcotry also includes:
+
+job scripts:
+
+* **SLiM_CV_\*.sh** - scripts to run 10 SLiM simulations on a single node. Calls ./run_SLiM_globalancestry.R one time. Demographic model is single-pulse admixture 20 generations in the past with P1 admixture contribution either at 0.65 or drawn from accepted parameters from ABC analysis (.RData must be provided; see ../figure_md/ABC.md and ../figure_md/GlobalAncestry.md). Admixed population has initial N=10000, exponential growth at rate of 0.05 per generation. The Duffy-null variant either has selection coefficient randomly drawn from uniform distirbution from 0 to 0.2, or drawn from accepted parameters from ABC analysis (.RData must be provided).
   
+* **ancestry_\*.sh** - scripts to extract local ancestry proportion across genome from 10 .trees files output from SLiM simulations. Calls ../localancestry_proportions.py 10 times.
+
+* **calcstats_\*.sh** - scripts to calculate global ancestry statistics for 10 simulations. Calls ./globalancestry_two-chromosme.R  or ./globalancestry_whole-autosome.R 10 times.
+
+driver scripts:
+
+- wrappers to submit jobs that simulate and analyze 500 simulations for whole-autosome, two-chromosome, and ABC-accepted each. Numbered in order. 04_make_df.sh will combine output stats for the 500 simulations into one .txt file for each of the three simulation sets.

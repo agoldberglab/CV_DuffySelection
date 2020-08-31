@@ -14,4 +14,4 @@ job scripts:
 
 driver scripts:
 
-- wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one txt file.
+- wrappers to submit jobs that simulate and analyze 10000 dominant, additive, and recessive simulations, each. Numbered in order. 04_make_df.sh will combine output stats for the 10000 simulations into one .txt file.

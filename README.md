@@ -41,23 +41,23 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 [./figure_md/](./figure_md/) - directory containing markdowns including Rscripts to generate all figures. Also includes code for main analyses performed in this study (see [./figure_md/README.md](./figure_md/README.md) for more detailed descriptions).
 
 * Calculation of observed ancestry-based statistics for Cabo Verde population, including _iDAT_ scores.
- * [./figure_md/CV_EmpiricalAnalyses.md](./figure_md/CV_EmpiricalAnalyses.md)
- * Publication figures 1, 2, & S1
+  * [./figure_md/CV_EmpiricalAnalyses.md](./figure_md/CV_EmpiricalAnalyses.md)
+  * Publication figures 1, 2, & S1
 * Comparison of observed Cabo Verde ancestry-based statistics to neutral expectations
- * [./figure_md/NeutralSims.md](./figure_md/NeutralSims.md)
- * Publication figure S2
+  * [./figure_md/NeutralSims.md](./figure_md/NeutralSims.md)
+  * Publication figure S2
 * Validation of SWIF(r) implementation
- * [./figure_md/SWIFr_validation.md](../figure_md/SWIFr_validation.md)
- * Publication figures S4 & S5
+  * [./figure_md/SWIFr_validation.md](../figure_md/SWIFr_validation.md)
+  * Publication figures S4 & S5
 * ABC estimation of selection strength and source population admixture contribution
- * [./figure_md/ABC.md](./figure_md/ABC.md)
- * Publication figures S3 & S6
+  * [./figure_md/ABC.md](./figure_md/ABC.md)
+  * Publication figures S3 & S6
 * Deterministic population genetic model of single-locus selection
- * [./figure_md/SelectionStrength.md](./figure_md/SelectionStrength.md)
- * Publication figure 3
+  * [./figure_md/SelectionStrength.md](./figure_md/SelectionStrength.md)
+  * Publication figure 3
 * Effect of single-locus selection on global ancestry patterns
- * [./figure_md/GlobalAncestry.md](./figure_md/GlobalAncestry.md)
- * Publication figures S7 & 4
+  * [./figure_md/GlobalAncestry.md](./figure_md/GlobalAncestry.md)
+  * Publication figures S7 & 4
 
 ## 3. Neutral simulations
 

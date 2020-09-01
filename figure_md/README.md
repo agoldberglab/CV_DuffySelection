@@ -1,6 +1,6 @@
 # Figure markdowns
 
-The current directory includes markdown files with R and cluster code used to perform the main analyses of this study and to reproduce figures. With the exception of local ancestry data, most input and output data can be found in [../datasets/](../datasets/) 
+The current directory includes markdown files with scripts used to perform the main analyses of this study and to reproduce figures. With the exception of local ancestry data, most input and output data can be found in [../datasets/](../datasets/) 
 
 1. **CV_EmpiricalAnalyses.md**
   

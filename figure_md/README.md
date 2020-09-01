@@ -8,11 +8,11 @@ The current directory includes markdown files with scripts used to perform the m
   
     Code and results for calculating ancestry-based statistics for Cabo Verde islands, including _iDAT_ score (Figures 1 & 2, Figure S1).
 
-2. * **NeutralSims.md**
+2. **NeutralSims.md**
   
     Code and results for comparing observed ancestry-based statistics ([../datasets/CV_stats.txt](../datasets/CV_stats.txt)) to neutral simulations for eight different demographic models (see [../neutral_sims/](../neutral_sims/)). Includes comparisons to statistics calculated for the entire simulated populations as well as random samples of 172 individuals from each simulated population (Figure S2).
 
-3. * **SWIFr_validation.md**
+3. **SWIFr_validation.md**
   
     Code and results for precision-recall analysis of SWIF(r) classification for test set of 1000 neutral and 1000 sweep simulations (see [../SWIFr_sims/](../SWIFr_sims/)) (Figure S4). Also includes code to generate confusion matrix and scatterplot to visualize SWIF(r) predictions across classes and the range of selection strength and initial admixture proportion (Figure S5).
 

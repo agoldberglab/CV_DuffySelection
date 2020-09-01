@@ -1,6 +1,8 @@
 # Figure markdowns
 
-The current directory includes markdown files with scripts used to perform the main analyses of this study and to reproduce figures. With the exception of local ancestry data, most input and output data can be found in [../datasets/](../datasets/) 
+The current directory includes markdown files with scripts used to perform the main analyses of this study and to reproduce figures. With the exception of local ancestry data, most input and output data can be found in [../datasets/](../datasets/)
+
+## Markdown files
 
 1. **CV_EmpiricalAnalyses.md**
   
@@ -26,3 +28,9 @@ The current directory includes markdown files with scripts used to perform the m
 5. **GlobalAncestry.md**
   
     Code and results for effect of selection strength on global ancestry (see [../globalancestry_sims/](../globalancestry_sims/)). Includes ANCOVA to test whether simulation model (two-chromosome with human genetic map vs whole-autosome with uniform recombination rate) has a significant affect on the relationship between selection strength and global ancestry (Figure S7). Also includes result of ABC estimation of initial admixture contribution (additive model) and the simulated change in global ancestry after 20 generations, using intial admixture contribution and selection strength from accepted ABC simulations as input parameters (Figure 4).
+    
+## Local Ancestry Data
+
+Raw local ancestry data can be found at _**DOI LINK**_. We calculated proportion of source population ancestries at each SNP position by island from the RFMix Viterbi output. We also used following script to collapse ancestry into bed files for each chromosome: https://github.com/armartin/ancestry_pipeline/blob/master/collapse_ancestry.py<sup>1</sup>.
+
+<sup>1</sup>Martin, et al. Human demographic history impacts genetic risk prediction across diverse populations. AJHG, 2017. (http://www.cell.com/ajhg/abstract/S0002-9297(17)30107-6)

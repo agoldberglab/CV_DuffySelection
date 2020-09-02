@@ -2,7 +2,7 @@
 
 ## Citation
 
-**add biorxiv link here**
+Hamid, I., Korunes, K., Beleza, S., Goldberg, A., 2020. Rapid adaptation to malaria facilitated by admixture in the human population of Cabo Verde. bioRxiv 2020.09.01.278226. https://doi.org/10.1101/2020.09.01.278226
 
 ## Contents
 1. Datasets

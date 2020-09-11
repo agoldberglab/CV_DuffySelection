@@ -31,6 +31,6 @@ The current directory includes markdown files with scripts used to perform the m
     
 ## Local Ancestry Data
 
-Raw local ancestry data can be found at _**DOI LINK**_. We calculated proportion of source population ancestries at each SNP position by island from the RFMix Viterbi output. We also used following script to collapse ancestry into bed files for each chromosome: https://github.com/armartin/ancestry_pipeline/blob/master/collapse_ancestry.py<sup>1</sup>.
+Raw local ancestry data can be found at https://doi.org/10.5281/zenodo.4021277. We calculated proportion of source population ancestries at each SNP position by island from the RFMix Viterbi output. We also used following script to collapse ancestry into bed files for each chromosome: https://github.com/armartin/ancestry_pipeline/blob/master/collapse_ancestry.py<sup>1</sup>.
 
 <sup>1</sup>Martin, et al. Human demographic history impacts genetic risk prediction across diverse populations. AJHG, 2017. (http://www.cell.com/ajhg/abstract/S0002-9297(17)30107-6)

@@ -134,11 +134,9 @@ ggplot(ancestry_ancova_df, aes(s, global_ancestry, colour = model)) +
 ![](GlobalAncestry_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
-whole_autosome$artificial_ancestry <- (whole_autosome$mean_chr1 * 0.08) + (whole_autosome$m * 0.92)
-
 ancestry_vs_selection <- ggplot(whole_autosome) +
-  geom_point(aes(x=s, y= global_ancestry), color = "black", shape = 1) +
-  geom_point(aes(x=s, y =artificial_ancestry), color = "grey", shape = 1) +
+  geom_point(aes(x=s, y= mean_chr1), color = "black", shape = 1) +
+  geom_point(aes(x=s, y =mean_restgenome), color = "grey", shape = 1) +
   xlab("selection coefficient (s)") +
   ylab("global ancestry") +
   theme_classic() +

@@ -8,7 +8,7 @@ Hamid, I., Korunes, K., Beleza, S., Goldberg, A., 2020. Rapid adaptation to mala
 1. Datasets
 2. Figure markdowns
 3. Neutral simulations
-4. iDAT performance simulations
+4. _iDAT_ performance simulations
 5. SWIF(r) simulations
 6. ABC simulations
 7. Global ancestry simulations

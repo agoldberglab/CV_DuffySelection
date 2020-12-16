@@ -35,7 +35,7 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 
 ## 1. Datasets
 
-[./datasets/](./datasets/) - directory containing simulated datasets used for analyses, chr1 and chr2 genetic maps (from IMPUTE2: https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.html) reformatted for SLiM, and observed ancestry-based stats calculated for Cabo Verde islands.
+[./datasets/](./datasets/) - directory containing simulated datasets used for analyses and observed ancestry-based stats calculated for Cabo Verde islands.
 
 ## 2. Figure markdowns
 

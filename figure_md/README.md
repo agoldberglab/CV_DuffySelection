@@ -6,7 +6,7 @@ The current directory includes markdown files with scripts used to perform the m
 
 1. **CV_EmpiricalAnalyses.md**
   
-    Code and results for calculating ancestry-based statistics for Cabo Verde islands, including _iDAT_ score (Figures 1, 2, 2-figure supplement 1).
+    Code and results for calculating ancestry-based statistics for Cabo Verde islands, including _iDAT_ score (Figures 1, & 2, and Figure 1- figure supplement 1&2, and Figure 2-figure supplement 1). Also includes code used to generate iHS plots (Figure 3).
 
 2. **NeutralSims.md**
   

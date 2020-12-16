@@ -8,10 +8,11 @@ Hamid, I., Korunes, K., Beleza, S., Goldberg, A., 2020. Rapid adaptation to mala
 1. Datasets
 2. Figure markdowns
 3. Neutral simulations
-4. SWIF(r) simulations
-5. ABC simulations
-6. Global ancestry simulations
-7. General use simulation scripts
+4. iDAT performance simulations
+5. SWIF(r) simulations
+6. ABC simulations
+7. Global ancestry simulations
+8. General use simulation scripts
 
 ##  Software used
 ### SLiM
@@ -42,30 +43,37 @@ SWIF(r) Version 1 https://github.com/ramachandran-lab/SWIFr
 
 * Calculation of observed ancestry-based statistics for Cabo Verde population, including _iDAT_ scores.
   * [./figure_md/CV_EmpiricalAnalyses.md](./figure_md/CV_EmpiricalAnalyses.md)
-  * Publication figures 1, 2, & S1
+  * Publication figures 1 & 2, figure 1 supplements 1 & 2, and figure 2 supplement 1
 * Comparison of observed Cabo Verde ancestry-based statistics to neutral expectations
   * [./figure_md/NeutralSims.md](./figure_md/NeutralSims.md)
-  * Publication figure S2
+  * Publication figure 2 supplements 2 & 3
+* Performance of _iDAT_ under different admixture histories
+  * [./figure_md/iDAT_performance.md](./figure_md/iDAT_performance.md)
+  * Publication figure 2 supplements 4 & 5
 * Validation of SWIF(r) implementation
   * [./figure_md/SWIFr_validation.md](../figure_md/SWIFr_validation.md)
-  * Publication figures S4 & S5
+  * Publication figure 6 and figure 6 supplement 1
 * ABC estimation of selection strength and source population admixture contribution
   * [./figure_md/ABC.md](./figure_md/ABC.md)
-  * Publication figures S3 & S6
+  * Publication figures 4 supplements 1 & 2
 * Deterministic population genetic model of single-locus selection
   * [./figure_md/SelectionStrength.md](./figure_md/SelectionStrength.md)
-  * Publication figure 3
+  * Publication figure 4
 * Effect of single-locus selection on global ancestry patterns
   * [./figure_md/GlobalAncestry.md](./figure_md/GlobalAncestry.md)
-  * Publication figures S7 & 4
+  * Publication figures 5 and figure 5 supplement 1
 
 ## 3. Neutral simulations
 
 [./neutral_sims/](./neutral_sims/) - directory containing bash scripts used to generate neutral simulations from 8 different demographic scenarios (see [./neutral_sims/README.md](./neutral_sims/README.md)), extract ancestry information from output files, and calculate ancestry-based statistics used in other analyses.
 
+## 3. _iDAT_ performance simulations
+
+[./iDAT_performance/](./iDAT_performance/) - directory containing bash scripts used to generate simulations from 36 different demographic and selection scenarios, and 4 different chromosome sizes (see [./iDAT_performance/README.md](./iDAT_performance/README.md)), extract ancestry information from output files, and calculate ancestry-based statistics used in other analyses.
+
 ## 4. SWIF(r) simulations
 
-[./SWIFr_sims/](./SWIFr_sims/) - directory containing bash scripts used to generate neutral and sweep simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
+[./SWIFr_sims/](./SWIFr_sims/) - directory containing bash scripts used to generate neutral and selection simulations, extracting ancestry information, and calculate ancestry-based statistics for training SWIF(r).
 
 ## 5. ABC simulations
 

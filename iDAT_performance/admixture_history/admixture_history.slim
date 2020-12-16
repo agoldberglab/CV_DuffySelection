@@ -1,0 +1,87 @@
+initialize() {
+	defineConstant("L", 249904549); //chr1 size
+	initializeTreeSeq();
+	initializeMutationRate(0); //no mutation rate in tree-sequence recording
+	initializeMutationType("m1", h, "f", s); //user must specify s and h
+	initializeGenomicElementType("g1", m1, 1.0);
+	initializeGenomicElement(g1, 0, L);
+	
+		lines = readFile(ratesfile); //user must specify ratesfile
+		ends = NULL;
+		rates = NULL;
+		
+		for (line in lines)
+		{
+			components = strsplit(line, "\t");
+			ends = c(ends, asInteger(components[0]));
+			rates = c(rates, asFloat(components[1]));
+		}
+		
+		initializeRecombinationRate(rates,ends);
+}
+
+//uncomment and specify tsel to change generation of selection onset
+//must also uncomment s1 block
+1 {
+        genend = asInteger(tend);
+        sim.rescheduleScriptBlock(s1, 1*genend, 1*genend);
+//	tim = asInteger(tsel); //user must specify tsel
+//	sim.rescheduleScriptBlock(s2, start=1*tim);
+	}
+
+//start simulation, form admixed population from two sources
+1 late() {
+	sim.addSubpop("p1", 1); //to track local ancestry, source populations only need 1 individual
+	sim.addSubpop("p2", 1);
+	sim.treeSeqRememberIndividuals(sim.subpopulations.individuals); //tree-sequence recording
+	
+	p1.genomes.addNewDrawnMutation(m1, asInteger(159174683)); //mutation at FY*O position
+	
+	sim.addSubpop("p3", N); //user must specify N of admixed population
+	m = asFloat(mig); //user must specify mig from source population 1
+	p3.setMigrationRates(c(p1, p2), c(m, 1-m));
+}
+
+//exponential growth with initial population size N
+2:20 {
+	base = asFloat("" + "1." + rate); //user must specify rate
+	newSize = asInteger(round(base^(sim.generation-1) * N));
+	p3.setSubpopulationSize(newSize);
+}
+
+
+//if user specifies cont_adm="T", add migrants from source populations each generation
+//migrants will be added at a rate of 1% new migrants per generation, at the same
+//proportions as the original ancestry contributions specified above
+2 late() {
+	if (cont_adm) {
+		m = asFloat(mig);
+		mig_rate = 0.01 * m;
+		mig_rate2 = 0.01-mig_rate;
+		p3.setMigrationRates(c(p1,p2), c(mig_rate, mig_rate2));
+	} else {
+		p3.setMigrationRates(c(p1, p2), c(0.0, 0.0));
+		p1.setSubpopulationSize(0);
+		p2.setSubpopulationSize(0);
+	}
+}
+
+//uncomment to change timing of selection onset
+//must also uncomment gen 1{} block
+//s2 1000 late() {
+//	mut = sim.mutationsOfType(m1); 
+//	mut.setSelectionCoeff(s);
+//}
+
+//end simulation at generation specified by tend
+//output trees file for tracking local ancestry
+s1 1000 late() {
+	if (cont_adm) {
+		p1.setSubpopulationSize(0);
+        	p2.setSubpopulationSize(0);
+	}
+
+	outname = "" + out + ".trees"; //user must specify out
+	sim.treeSeqOutput(outname);
+	sim.simulationFinished();
+}

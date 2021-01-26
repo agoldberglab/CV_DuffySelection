@@ -1100,8 +1100,8 @@ thousand points to be plotted.
 
     #!/usr/bin/env Rscript
     
-    (library tidyverse)
-    (library magrittr)
+    library(tidyverse)
+    library(magrittr)
     
     iHS_chr1 <- read.table("NWCluster_chr1_iHS", sep="\t", header=TRUE)
     iHS_chr2 <- read.table("NWCluster_chr2_iHS", sep="\t", header=TRUE)
